@@ -1,0 +1,31 @@
+! Namelists for mimetic SWE model
+!
+! Basic information in the run
+&rundata
+  ygridfile = 'gridopermap_hex_0000040962.dat'
+&END
+!
+! Advection scheme
+&advectdata
+  degree = 2,
+&END
+!
+! Timing information
+&timedata
+  dt = 900.0,
+  niter = 4,
+  alpha_v = 0.5d0,
+  alpha_pg = 0.5d0,
+  nstop = 4800,
+  noutput = 960,
+  nrestart = 0
+&END
+! ygridfile = 'gridopermap_hex_0000000642.dat'
+! ygridfile = 'gridopermap_hex_0000002562.dat'
+! ygridfile = 'gridopermap_hex_0000010242.dat'
+! ygridfile = 'gridopermap_hex_0000040962.dat'
+! ygridfile = 'gridopermap_hex_0000163842.dat'
+! ygridfile = 'gridopermap_cube_0000000864.dat'
+! ygridfile = 'gridopermap_cube_0000003456.dat'
+! ygridfile = 'gridopermap_cube_0000013824.dat'
+! ygridfile = 'gridopermap_cube_0000055296.dat'
