@@ -1,2 +1,7 @@
 *.dat
+*.swp
 gengrid_hex
+cellCentres_noHeader
+patchFaces_noHeader
+patchPoints_noHeader
+patch.obj

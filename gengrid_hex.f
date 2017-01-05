@@ -948,6 +948,107 @@ C
       ENDIF
 C
 C
+C     -------------------------------------------------------------------
+C
+C     Write out vertices of each face for OpenFOAM
+
+      OPEN(82,FILE='patchFaces_noHeader')
+
+      IGRID=NGRIDS
+
+      write(82,*) "//  Face vertices (c-cstyle) for NGRIDS=", NGRIDS
+      write(82,*) NFACE(IGRID)
+      write(82,*) "("
+      
+      do IF1 = 1, NFACE(IGRID)
+        if (VOFF(IF1, 6, IGRID) .EQ. 0) then
+          write(82,*) "5 ( ", (VOFF(IF1, IF2, IGRID)-1, IF2=5,1,-1)," )"
+        else
+          write(82,*) "6 ( ", (VOFF(IF1, IF2, IGRID)-1, IF2=6,1,-1)," )"
+        endif
+      enddo
+
+      write(82,*) ")"
+      CLOSE(82)
+C
+C
+C     -------------------------------------------------------------------
+C
+C     Write out vertex locations for OpenFOAM
+
+      OPEN(82,FILE='patchPoints_noHeader')
+
+      IGRID=NGRIDS
+      
+      write(82,*) "//  Grid coordinates for NGRIDS=", NGRIDS
+      write(82,*) "// Cartesian vertex locations - finest grid"
+      write(82,*) NVERT(IGRID)
+      write(82,*) "("
+      
+      do IV1 = 1, NVERT(IGRID)
+          LONG = VLONG(IV1,IGRID)
+          LAT  = VLAT(IV1,IGRID)
+          CALL LL2XYZ(LONG,LAT,X1,Y1,Z1)
+          write(82,999) X1, Y1, Z1
+ 999      format("( ", G23.16, " ", G23.16, " ", G23.16, " )")
+      enddo
+
+      write(82,*) ")"
+      CLOSE(82)
+C
+C
+C     -------------------------------------------------------------------
+C
+C     Write out patch in .obj format
+
+      OPEN(82,FILE='patch.obj')
+
+      IGRID=NGRIDS
+
+C     Write out vertices
+      do IV1 = 1, NVERT(IGRID)
+          LONG = VLONG(IV1,IGRID)
+          LAT  = VLAT(IV1,IGRID)
+          CALL LL2XYZ(LONG,LAT,X1,Y1,Z1)
+          write(82,998) X1, Y1, Z1
+ 998      format("v ", G23.16, " ", G23.16, " ", G23.16)
+      enddo
+
+C     write out faces
+      do IF1 = 1, NFACEX
+        if (VOFF(IF1, 6, IGRID) .EQ. 0) then
+          write(82,997) (VOFF(IF1, IF2, IGRID), IF2=5,1,-1)
+ 997      format("f ", 6I8)
+        else
+          write(82,997) (VOFF(IF1, IF2, IGRID), IF2=6,1,-1)
+        endif
+      enddo
+    
+      CLOSE(82)
+C
+C
+C     -------------------------------------------------------------------
+C
+C     Write out cellCentres for OpenFOAM
+
+      OPEN(82,FILE='cellCentres_noHeader')
+
+      IGRID=NGRIDS
+
+      write(82,*) NFACE(IGRID)
+      write(82,*) "("
+      do IF1 = 1, NFACEX
+          LONG = FLONG(IF1,NGRIDS)
+          LAT  = FLAT(IF1,NGRIDS)
+          CALL LL2XYZ(LONG,LAT,X1,Y1,Z1)
+          write(82,999) X1, Y1, Z1
+      enddo
+    
+      write(82,*) ")"
+      CLOSE(82)
+
+C
+C
 C     Create file of grid coordinates only, for plotting
       OPEN(44,FILE='primalgrid.dat',FORM='FORMATTED')
       DO 200 1 ie1 = 1, nedgex
