@@ -53,6 +53,7 @@ C
      :       MXDISP,BDISP,S
       CHARACTER*26 YNAME
       LOGICAL LSWAP,lprint
+      CHARACTER(4) CREATE_GRIDMAP_STR
 C
       COMMON /COMGRD/ FNXTF,EOFF,FNXTE,FEOFE,VOFE,VOFF,FOFV,EOFV,
      :                FLONG,FLAT,FAREA,VLONG,VLAT,LDIST,DDIST,GDIST,
@@ -848,8 +849,13 @@ C
 C     Create a file of cross reference tables and coordinates etc
 C     for use by the model
 C
-      PRINT *,'Create a GRIDMAP file (0 or 1) ?'
-      READ (5,*) IF0
+      IF (COMMAND_ARGUMENT_COUNT() .GE. 1) THEN
+        CALL GET_COMMAND_ARGUMENT(1, CREATE_GRIDMAP_STR)
+        READ (CREATE_GRIDMAP_STR, '(I1)') IF0
+      ELSE
+        IF0 = 0
+      ENDIF
+
       IF (IF0.EQ.1) THEN
 C
         WRITE(YNAME,'(''gridmap_hex_'',I10.10,''.dat'')') NFACEX
