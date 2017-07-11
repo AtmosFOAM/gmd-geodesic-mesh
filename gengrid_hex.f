@@ -94,7 +94,7 @@ C     Cross-reference tables for dodecahedron
 C
       IGRID=1
 C
-      OPEN(80,FILE='dodecahedron.xref')
+      OPEN(80,FILE='$DODECAHEDRON')
 C
       NFACE(1)=12
       NEDGE(1)=30

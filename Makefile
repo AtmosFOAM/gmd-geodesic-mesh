@@ -2,7 +2,7 @@
 define ngrids
 
 gengrid_hex.$1.f: gengrid_hex.f
-	NGRIDS=$1 envsubst < $$< > $$@
+	NGRIDS=$1 DODECAHEDRON=/usr/share/gmd-geodesic-mesh/dodecahedron.xref envsubst < $$< > $$@
 
 gengrid_hex.$1: gengrid_hex.$1.f
 	gfortran -mcmodel=medium $$< -o $$@
