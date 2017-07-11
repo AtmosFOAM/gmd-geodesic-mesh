@@ -6,11 +6,11 @@ INSTALL_DATA := $(INSTALL) -m 644
 PREFIX := /usr
 exec_prefix := $(PREFIX)
 bindir := $(exec_prefix)/bin
-DESTDIR := debian/atmosfoam-tools
+DESTDIR := debian/gmd-geodesic-mesh
 
 %:
-	debian/override_dh.sh dh $@
+	dh $@
 
 override_dh_auto_install:
 	$(INSTALL) -d $(DESTDIR)$(bindir)
-	$(INSTALL_PROGRAM) -D gengrid_hex.? $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) -D gengrid_hex.[0-9] $(DESTDIR)$(bindir)

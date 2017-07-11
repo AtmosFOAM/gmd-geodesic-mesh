@@ -7,3 +7,8 @@ cellCentres_noHeader
 patchFaces_noHeader
 patchPoints_noHeader
 patch.obj
+debian/gmd-geodesic-mesh*
+debian/changelog
+debian/debhelper-build-stamp
+debian/files
+
