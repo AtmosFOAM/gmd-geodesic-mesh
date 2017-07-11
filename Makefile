@@ -11,8 +11,12 @@ endef
 
 refinements := 3 4 5 6 7 8 9
 
-.PHONY: all
+.PHONY: clean all
 
 all: $(foreach n,$(refinements),gengrid_hex.$n)
+
+clean:
+	$(RM) gengrid_hex.[0-9]
+	$(RM) gengrid_hex.?.f
 
 $(foreach n,$(refinements),$(eval $(call ngrids,$n)))

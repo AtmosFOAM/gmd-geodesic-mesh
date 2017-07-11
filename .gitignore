@@ -1,7 +1,8 @@
 *.dat
 *.swp
-gengrid_hex.?
+gengrid_hex.[0-9]
 gengrid_hex.?.f
+*.m
 cellCentres_noHeader
 patchFaces_noHeader
 patchPoints_noHeader

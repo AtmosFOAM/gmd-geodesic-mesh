@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+SHELL := /bin/bash
+INSTALL := install
+INSTALL_PROGRAM := $(INSTALL)
+INSTALL_DATA := $(INSTALL) -m 644
+PREFIX := /usr
+exec_prefix := $(PREFIX)
+bindir := $(exec_prefix)/bin
+DESTDIR := debian/atmosfoam-tools
+
+%:
+	debian/override_dh.sh dh $@
+
+override_dh_auto_install:
+	$(INSTALL) -d $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) -D gengrid_hex.? $(DESTDIR)$(bindir)
